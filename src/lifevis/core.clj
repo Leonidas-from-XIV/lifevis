@@ -1,7 +1,6 @@
 (ns lifevis.core
-  (:use seesaw.core)
-  (:require [seesaw.bind :as b]
-            [seesaw.timer :as t])
+  (:require [seesaw.timer :as t]
+            [seesaw.core :refer :all])
   (:gen-class))
 
 
