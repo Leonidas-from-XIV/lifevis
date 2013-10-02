@@ -4,7 +4,6 @@
             [seesaw.timer :as t])
   (:gen-class))
 
-(def starting-data [[true false] [false true]])
 
 (defn build-widgets [data]
   (->> data
@@ -15,15 +14,18 @@
 (defn random-seq []
   (repeatedly #(rand-nth [true false])))
 
+(def starting-data
+  (map vector (take 64 (random-seq))))
+
 (defn dummy-simulate [data]
   (println data)
-  (map vector (take 4 (random-seq))))
+  (map vector (take 64 (random-seq))))
 
-(defn -main
+(defn display-game
   "Displays a SWING window with game of life cells"
-  [& args]
+  [rows]
   (invoke-later
-    (let [grid (grid-panel :rows 2)
+    (let [grid (grid-panel :rows rows)
           data (ref starting-data)]
       (-> (frame :title "Game of Life"
                  :content grid
@@ -36,3 +38,7 @@
                  (dosync
                    (alter data dummy-simulate))
                  (config! grid :items (build-widgets @data)))))))
+
+(defn -main
+  [& args]
+  (display-game 8))
